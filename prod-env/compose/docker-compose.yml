@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+
+  traefik:
+    image: traefik:v2.9
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/traefik/traefik.toml:/etc/traefik/traefik.toml
+      - ${DATA_DIR}/traefik/acme.json:/acme.json
+
+  api:
+    image: ghcr.io/edythecow/oslo-bysykkel-api:master
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      # HTTP
+      - "traefik.http.routers.oslo-bysykkel-api.entrypoints=web"
+      - "traefik.http.routers.oslo-bysykkel-api.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.oslo-bysykkel-api.middlewares=oslo-bysykkel-api_https"
+      - "traefik.http.middlewares.oslo-bysykkel-api_https.redirectscheme.scheme=https"
+      # HTTPS
+      - "traefik.http.routers.oslo-bysykkel-api_https.entrypoints=websecure"
+      - "traefik.http.routers.oslo-bysykkel-api_https.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.oslo-bysykkel-api_https.tls=true"
+      - "traefik.http.routers.oslo-bysykkel-api_https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.oslo-bysykkel-api_https.loadbalancer.server.port=${APP_PORT}"
