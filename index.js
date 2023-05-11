@@ -9,8 +9,12 @@ const API_URL = 'https://gbfs.urbansharing.com/oslobysykkel.no';
 app.get('/stations', async (req, res) => {
   try {
     const [infoDataResponse, statusDataResponse] = await Promise.all([
-      axios.get(`${API_URL}/station_information.json`),
-      axios.get(`${API_URL}/station_status.json`),
+      axios.get(`${API_URL}/station_information.json`, {
+        headers: { 'Client-Identifier': 'eddy-origoOppgave' },
+      }),
+      axios.get(`${API_URL}/station_status.json`, {
+        headers: { 'Client-Identifier': 'eddy-origoOppgave' },
+      }),
     ]);
 
     const infoData = infoDataResponse.data;
@@ -19,7 +23,7 @@ app.get('/stations', async (req, res) => {
 
     const combinedData = infoData.data.stations.map((station, index) => {
       return {
-        station_name: station.name,
+        name: station.name,
         num_bikes_available: statusData.data.stations[index].num_bikes_available,
         num_docks_available: statusData.data.stations[index].num_docks_available,
       };
