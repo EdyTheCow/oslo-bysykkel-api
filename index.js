@@ -6,7 +6,7 @@ const port = 3000;
 
 const API_URL = 'https://gbfs.urbansharing.com/oslobysykkel.no';
 
-app.get('/data', async (req, res) => {
+app.get('/stations', async (req, res) => {
   try {
     const [infoDataResponse, statusDataResponse] = await Promise.all([
       axios.get(`${API_URL}/station_information.json`),
