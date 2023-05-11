@@ -13,9 +13,9 @@ app.get('/data', async (req, res) => {
       axios.get(`${API_URL}/station_status.json`),
     ]);
 
-    const lastUpdated = statusData.last_updated;
     const infoData = infoDataResponse.data;
     const statusData = statusDataResponse.data;
+    const lastUpdated = statusData.last_updated;
 
     const combinedData = infoData.data.stations.map((station, index) => {
       return {
