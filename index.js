@@ -23,6 +23,7 @@ app.get('/stations', async (req, res) => {
 
     const combinedData = infoData.data.stations.map((station, index) => {
       return {
+        station_id: station.station_id,
         name: station.name,
         num_bikes_available: statusData.data.stations[index].num_bikes_available,
         num_docks_available: statusData.data.stations[index].num_docks_available,
