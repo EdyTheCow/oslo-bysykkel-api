@@ -1,10 +1,13 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
 const API_URL = 'https://gbfs.urbansharing.com/oslobysykkel.no';
+
+app.use(cors());
 
 app.get('/stations', async (req, res) => {
   try {
