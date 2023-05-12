@@ -70,13 +70,13 @@ https://bysykkel-api.edy.io/stations
 
 ## Data provided
 There's currently one endpoint which provides following data:
-| Data | Example
-|-|-|
-| last_updated | Time in unix / epoch format |
-| station_id | Unique station ID |
-| name | Name of the station |
-| num_bikes_available | Currently available bikes |
-| num_docks_available | Currently available docks |
+| Data | Type | Description |
+|-|-|-|
+| last_updated | int | Time in unix / epoch format |
+| station_id | string | Unique station ID |
+| name | string | Name of the station |
+| num_bikes_available | int | Currently available bikes |
+| num_docks_available | int | Currently available docks |
 
 ## Sample data from endpoint
 ```json
